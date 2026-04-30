@@ -1,0 +1,21 @@
+title,abstract,accepted,authors_count,citation_count,year,venue,topic
+Attention Is All You Need,We propose a new simple network architecture the Transformer based solely on attention mechanisms dispensing with recurrence and convolutions entirely.,1,8,45000,2017,NeurIPS,deep learning
+BERT: Pre-training of Deep Bidirectional Transformers,We introduce BERT a new language representation model which stands for Bidirectional Encoder Representations from Transformers.,1,4,38000,2018,NAACL,NLP
+Deep Residual Learning for Image Recognition,We present a residual learning framework to ease the training of networks that are substantially deeper than those used previously.,1,4,60000,2016,CVPR,computer vision
+A Simple Baseline for Semi-Supervised Learning,We revisit semi-supervised learning and propose a simple baseline that achieves strong performance on standard benchmarks.,0,2,120,2021,ICLR,machine learning
+Generative Adversarial Networks,We propose a new framework for estimating generative models via an adversarial process in which two models are simultaneously trained.,1,2,35000,2014,NeurIPS,generative models
+On the Limitations of Current Neural Networks,This paper discusses several fundamental limitations of current deep learning approaches and suggests future research directions.,0,1,45,2022,arXiv,deep learning
+Dropout: A Simple Way to Prevent Neural Networks from Overfitting,We describe dropout a technique for addressing overfitting in neural networks by randomly dropping units during training.,1,4,22000,2014,JMLR,regularization
+Predicting Stock Prices Using LSTM,We apply long short-term memory networks to predict stock market prices using historical data from NYSE.,0,2,80,2020,ICML,finance
+Adam: A Method for Stochastic Optimization,We introduce Adam an algorithm for first-order gradient-based optimization of stochastic objective functions.,1,2,28000,2015,ICLR,optimization
+An Empirical Study of Random Forests on Small Datasets,We conduct an empirical study of random forest classifiers on small tabular datasets and compare against gradient boosting.,0,1,30,2021,ECML,machine learning
+ImageNet Large Scale Visual Recognition Challenge,We present the ImageNet Large Scale Visual Recognition Challenge and describe the dataset and evaluation procedure.,1,7,18000,2015,IJCV,computer vision
+Towards Robust Text Classification Under Distribution Shift,We study the robustness of text classifiers under distribution shift and propose a simple data augmentation strategy.,0,3,95,2022,ACL,NLP
+Playing Atari with Deep Reinforcement Learning,We present the first deep learning model to successfully learn control policies directly from high-dimensional sensory input using reinforcement learning.,1,5,12000,2013,NeurIPS,reinforcement learning
+A Survey of Transformer Models in NLP,We survey recent transformer-based models in natural language processing and summarize their architectures and benchmarks.,0,2,210,2021,arXiv,NLP
+Variational Autoencoders for Collaborative Filtering,We apply variational autoencoders to collaborative filtering for implicit feedback datasets and achieve state-of-the-art results.,1,3,1800,2018,WWW,recommendation systems
+Improving Language Understanding by Generative Pre-Training,We demonstrate that large gains on NLP tasks can be realized by generative pre-training of a language model on a diverse corpus.,1,4,8000,2018,OpenAI,NLP
+A Comparative Study of Clustering Algorithms,We compare k-means DBSCAN and hierarchical clustering on synthetic and real-world datasets across multiple evaluation metrics.,0,2,55,2020,PAKDD,unsupervised learning
+Neural Machine Translation by Jointly Learning to Align and Translate,We propose an extension to the encoder-decoder model which learns to align and translate jointly improving translation quality.,1,3,14000,2015,ICLR,NLP
+Predicting Hospital Readmission Using EHR Data,We build a machine learning pipeline to predict 30-day hospital readmission using electronic health records.,0,3,140,2021,AMIA,healthcare
+XGBoost: A Scalable Tree Boosting System,We describe a scalable end-to-end tree boosting system called XGBoost which is used widely by data scientists to achieve state-of-the-art results.,1,2,9000,2016,KDD,machine learning
