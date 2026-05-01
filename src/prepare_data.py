@@ -78,7 +78,18 @@ def clean_dataframe(df: pd.DataFrame) -> pd.DataFrame:
     return df.reset_index(drop=True)
 
 
+def balance_dataframe(df: pd.DataFrame) -> pd.DataFrame:
+    accepted = df[df["accepted"] == 1]
+    rejected = df[df["accepted"] == 0]
+    # Undersample rejected to 2x accepted to reduce bias
+    rejected = rejected.sample(n=min(len(rejected), len(accepted) * 2), random_state=42)
+    balanced = pd.concat([accepted, rejected]).sample(frac=1, random_state=42).reset_index(drop=True)
+    print(f"Balanced dataset: {len(accepted)} accepted, {len(rejected)} rejected")
+    return balanced
+
+
 def split_and_save(df: pd.DataFrame) -> None:
+    df = balance_dataframe(df)
     train_df, temp_df = train_test_split(
         df,
         test_size=0.30,

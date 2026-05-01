@@ -35,8 +35,20 @@ def extract_text_from_pdf(pdf_path: Path) -> tuple[str, str]:
     return title, abstract
 
 
+def build_df(title: str, abstract: str) -> pd.DataFrame:
+    return pd.DataFrame([{
+        "title": title,
+        "abstract": abstract,
+        "text": f"{title} {abstract}",
+        "authors_count": 0,
+        "venue": "unknown",
+        "abstract_length": len(abstract.split()),
+        "title_length": len(title.split()),
+    }])
+
+
 def predict_one(pipeline, title: str, abstract: str) -> None:
-    df = pd.DataFrame([{"title": title, "abstract": abstract, "text": f"{title} {abstract}"}])
+    df = build_df(title, abstract)
     prob = pipeline.predict_proba(df)[0][1]
     label = "ACCEPTED" if prob >= 0.5 else "REJECTED"
     print(f"\nTitle:       {title}")
@@ -67,14 +79,45 @@ if __name__ == "__main__":
     parser.add_argument("--abstract", help="Paper abstract")
     args = parser.parse_args()
 
-    pipeline = load_joblib(MODELS_DIR / "tfidf_pipeline.joblib")
+    model_file = MODELS_DIR / "embedding_model.joblib"
+    if not model_file.exists():
+        model_file = MODELS_DIR / "tfidf_pipeline.joblib"
+    model = load_joblib(model_file)
+    print(f"Using model: {model_file.stem}\n")
+
+    # Wrap embedding model to match pipeline interface
+    from sentence_transformers import SentenceTransformer
+    import numpy as np
+
+    def get_proba(title, abstract):
+        text = f"{title} {abstract}"
+        if "embedder_name" in model:
+            embedder = SentenceTransformer(model["embedder_name"])
+            X_text = embedder.encode([text])
+            abstract_length = len(abstract.split())
+            title_length = len(title.split())
+            X_num = np.array([[0, abstract_length, title_length]], dtype=float)
+            X_num = model["scaler"].transform(model["imputer"].transform(X_num))
+            X = np.hstack([X_text, X_num])
+            return model["classifier"].predict_proba(X)[0][1]
+        else:
+            df = build_df(title, abstract)
+            return model.predict_proba(df)[0][1]
 
     if args.pdf:
         title, abstract = extract_text_from_pdf(Path(args.pdf))
-        predict_one(pipeline, title, abstract)
-    elif args.file:
-        predict_csv(pipeline, Path(args.file))
     elif args.title and args.abstract:
-        predict_one(pipeline, args.title, args.abstract)
+        title, abstract = args.title, args.abstract
+    elif args.file:
+        predict_csv(model, Path(args.file))
+        exit()
     else:
         print("Provide --pdf, --file, or both --title and --abstract")
+        exit()
+
+    prob = get_proba(title, abstract)
+    label = "ACCEPTED" if prob >= 0.5 else "REJECTED"
+    print(f"Title:       {title}")
+    print(f"Abstract:    {abstract[:150]}...")
+    print(f"Result:      {label}")
+    print(f"Confidence:  {prob:.2%} chance of acceptance")
